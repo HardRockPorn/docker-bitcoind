@@ -1,5 +1,4 @@
 FROM ubuntu:xenial
-MAINTAINER Kyle Manna <kyle@kylemanna.com>
 
 ARG USER_ID
 ARG GROUP_ID
@@ -14,8 +13,7 @@ ENV GROUP_ID ${GROUP_ID:-1000}
 RUN groupadd -g ${GROUP_ID} bitcoin \
 	&& useradd -u ${USER_ID} -g bitcoin -s /bin/bash -m -d /bitcoin bitcoin
 
-RUN apt-key adv --keyserver keyserver.ubuntu.com --recv-keys C70EF1F0305A1ADB9986DBD8D46F45428842CE5E && \
-    echo "deb http://ppa.launchpad.net/bitcoin/bitcoin/ubuntu xenial main" > /etc/apt/sources.list.d/bitcoin.list
+RUN add-apt-repository ppa:bitcoin/bitcoin
 
 RUN apt-get update && apt-get install -y --no-install-recommends \
 		bitcoind \
